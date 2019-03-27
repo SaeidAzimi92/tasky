@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface UserRoleProjectRepository extends CrudRepository<UserRoleProject, Long> {
 
+    UserRoleProject findByUserId(long userId);
+
     List<UserRoleProject> findAllByUserId(long id);
 
     List<UserRoleProject> findAllByProjectId(long id);

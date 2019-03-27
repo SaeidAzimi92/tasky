@@ -1,6 +1,8 @@
 package com.saeed.tasky.services;
 
 import com.saeed.tasky.models.Project;
+import com.saeed.tasky.models.Role;
+import com.saeed.tasky.models.User;
 import com.saeed.tasky.models.UserRoleProject;
 import com.saeed.tasky.models.dto.ProjectDto;
 import com.saeed.tasky.models.dto.mapper.ProjectMapper;
@@ -16,15 +18,18 @@ public class ProjectServices {
 
     private ProjectRepository projectRepository;
     private UserRoleProjectRepository userRoleProjectRepository;
+    private UserServices userServices;
     private ProjectMapper mapper;
 
     @Autowired
     public ProjectServices(ProjectRepository projectRepository, UserRoleProjectRepository userRoleProjectRepository,
-                           ProjectMapper mapper) {
+                           UserServices userServices, ProjectMapper mapper) {
         this.projectRepository = projectRepository;
         this.userRoleProjectRepository = userRoleProjectRepository;
+        this.userServices = userServices;
         this.mapper = mapper;
     }
+
 
     public List getAllProjects() {
         return (List<Project>) projectRepository.findAll();
@@ -46,4 +51,11 @@ public class ProjectServices {
         return userRoleProjectRepository.findAllByProjectId(projectId);
     }
 
+    public User getUser(long userId) {
+        return userServices.findUserById(userId);
+    }
+
+    public Role getAdminRole() {
+        return userServices.getProjectOwnerRole();
+    }
 }

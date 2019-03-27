@@ -33,6 +33,10 @@ public class RoleServices {
         return (List) repository.findAll();
     }
 
+    public Role getRoleByName(String name) {
+        return repository.findByName(name);
+    }
+
     public boolean removeRole(long id) {
         try {
             repository.deleteById(id);

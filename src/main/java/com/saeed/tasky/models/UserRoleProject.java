@@ -18,11 +18,11 @@ public class UserRoleProject {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     private Project project;
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     private User user;
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     private Role role;
 
     public UserRoleProject(Project project, User user, Role role) {
