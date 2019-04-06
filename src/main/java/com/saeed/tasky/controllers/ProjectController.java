@@ -1,7 +1,9 @@
 package com.saeed.tasky.controllers;
 
+import com.saeed.tasky.models.dto.MembersAddedDto;
 import com.saeed.tasky.models.dto.ProjectDto;
 import com.saeed.tasky.services.ProjectServices;
+import com.saeed.tasky.utils.Commands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +26,7 @@ public class ProjectController {
         ProjectDto dto = new ProjectDto();
         dto.setName(name);
         dto.setUser(services.getUser(userId));
-        dto.setRole(services.getAdminRole());
+        dto.setRole(services.getRoleByName(Commands.RolesName.ADMIN.getValue()));
         services.addProject(dto);
         return HttpStatus.OK;
     }
@@ -32,6 +34,13 @@ public class ProjectController {
     @GetMapping(value = "/members/{projectId}")
     public List getMembers(@PathVariable("projectId") long projectId) {
         return services.getProjectMembers(projectId);
+    }
+
+    @PostMapping(value = "/add/member")
+    public HttpStatus addUserToProjects(@RequestBody MembersAddedDto dto) {
+        if (dto != null)
+            return services.addMemberToProject(dto) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        else return HttpStatus.BAD_REQUEST;
     }
 
     @GetMapping(value = "")

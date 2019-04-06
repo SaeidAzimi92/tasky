@@ -45,4 +45,8 @@ public class RoleServices {
             return false;
         }
     }
+
+    public Role getRoleById(Long roleId) {
+        return repository.findById(roleId).get();
+    }
 }

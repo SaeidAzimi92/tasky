@@ -4,6 +4,7 @@ import com.saeed.tasky.models.Project;
 import com.saeed.tasky.models.Role;
 import com.saeed.tasky.models.User;
 import com.saeed.tasky.models.UserRoleProject;
+import com.saeed.tasky.models.dto.MembersAddedDto;
 import com.saeed.tasky.models.dto.ProjectDto;
 import com.saeed.tasky.models.dto.mapper.ProjectMapper;
 import com.saeed.tasky.repositories.ProjectRepository;
@@ -30,12 +31,15 @@ public class ProjectServices {
         this.mapper = mapper;
     }
 
-
     public List getAllProjects() {
         return (List<Project>) projectRepository.findAll();
     }
 
-    public Project getProjectById(long id) {
+    public List getProjectAllInfo() {
+        return (List) userRoleProjectRepository.findAll();
+    }
+
+    private Project getProjectById(long id) {
         return projectRepository.findProjectById(id);
     }
 
@@ -55,7 +59,25 @@ public class ProjectServices {
         return userServices.findUserById(userId);
     }
 
-    public Role getAdminRole() {
-        return userServices.getProjectOwnerRole();
+    public boolean addMemberToProject(MembersAddedDto membersAddedDto) {
+        UserRoleProject userRoleProject = new UserRoleProject(getProjectById(membersAddedDto.getProjectId()),
+                getUser(membersAddedDto.getUserId()), getRoleById(membersAddedDto.getRoleId()));
+        userRoleProjectRepository.save(userRoleProject);
+        return true;
+    }
+
+    public Role getRoleByName(String value) {
+        return userServices.getProjectOwnerRole(value);
+    }
+
+    private Role getRoleById(Long roleId) {
+        return userServices.getRoleById(roleId);
+    }
+
+    public void saveProject(ProjectDto form) {
+        projectRepository.save(form.getProject());
+        UserRoleProject userRoleProject = new UserRoleProject(form.getProject(),
+                getUser(form.getUser().getId()), getRoleById(form.getRole().getId()));
+        userRoleProjectRepository.save(userRoleProject);
     }
 }

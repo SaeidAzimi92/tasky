@@ -53,20 +53,19 @@ public class UserServices {
     }
 
     public List getUserProjects(long userId) {
-        List<UserRoleProject> list = userRoleProjectRepository.findAllByUserId(userId);
-//        List<Project> projects = new ArrayList<>();
-//        for (UserRoleProject item : list) {
-//            projects.add(item)
-//        }
-        return list;
+
+        return userRoleProjectRepository.findAllByUserId(userId);
     }
 
     public User findUserById(long userId) {
         return repository.findById(userId);
     }
 
-    public Role getProjectOwnerRole() {
-        return roleServices.getRoleByName("admin");
+    public Role getProjectOwnerRole(String value) {
+        return roleServices.getRoleByName(value);
     }
 
+    public Role getRoleById(Long roleId) {
+        return roleServices.getRoleById(roleId);
+    }
 }

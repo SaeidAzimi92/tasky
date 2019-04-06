@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+          rel="stylesheet">
+    <title>Projects list</title>
+</head>
+<body class="container">
+<div class="row">
+    <div class="col-md-6" style="padding-top: 40px">
+        <a class="btn btn-info" href="#" th:href="@{/project/ui/all}"> Back to All Projects </a>
+
+        <form action="#" th:action="@{/project/ui/save}" th:object="${form1}"
+              method="post">
+            <fieldset>
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="align-content: center">
+                            Create New Project
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="projects1, itemStat : ${form1}">
+                        <th> Name:</th>
+                        <td><input th:field="*{project.name}"/></td>
+                    </tr>
+
+                    <tr th:each="projects2, itemStat : ${form1}">
+                        <th> Icon:</th>
+                        <td><input th:field="*{project.icon}"/></td>
+                    </tr>
+
+                    <tr th:each="projects3, itemStat : ${form1}">
+                        <th> Owner:</th>
+                        <td><input th:field="*{user.id}"/></td>
+                    </tr>
+
+                    <tr th:each="projects4, itemStat : ${form1}">
+                        <th> Role:</th>
+                        <td><input th:field="*{role.id}"/></td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+                <input type="submit" id="submitButton" th:value="Save">
+                <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+            </fieldset>
+        </form>
+    </div>
+</div>
+</body>
+</html>

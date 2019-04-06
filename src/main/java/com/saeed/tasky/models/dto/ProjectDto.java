@@ -1,5 +1,6 @@
 package com.saeed.tasky.models.dto;
 
+import com.saeed.tasky.models.Project;
 import com.saeed.tasky.models.Role;
 import com.saeed.tasky.models.User;
 import io.swagger.annotations.ApiModel;
@@ -16,5 +17,6 @@ import lombok.NoArgsConstructor;
 public class ProjectDto {
     private User user;
     private Role role;
+    private Project project;
     private String name;
 }

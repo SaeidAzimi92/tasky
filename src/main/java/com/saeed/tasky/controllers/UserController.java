@@ -31,8 +31,8 @@ public class UserController {
         return userServices.getUsers();
     }
 
-    @GetMapping(value = "/projects")
-    public List getAllProjects(long userId) {
+    @GetMapping(value = "/{userId}/projects")
+    public List getAllProjects(@PathVariable("userId") long userId) {
         return userServices.getUserProjects(userId);
     }
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+          rel="stylesheet">
+    <script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js"
+    ></script>
+    <title>Projects list</title>
+</head>
+<body class="container">
+
+
+<div style="padding-top: 40px">
+    <a class="btn btn-success" th:href="@{/project/ui/create}"> Add Project </a>
+    <a class="btn btn-primary" th:href="@{/project/ui/edit}" th:classappend="${projects.empty} ? 'disabled' : ''"> Edit
+        Project </a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th> Name</th>
+        <th> Owner</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${projects.empty}">
+        <td colspan="2"> No Projects Available</td>
+    </tr>
+    <tr th:each="project : ${projects}">
+        <td><span th:text="${project.getProject().name}"> Name </span></td>
+        <td><span th:text="${project.getUser().id}"> Name </span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
