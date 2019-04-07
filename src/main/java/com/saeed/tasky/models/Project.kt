@@ -5,7 +5,7 @@ import java.sql.Timestamp
 import java.time.LocalDateTime
 
 @Entity(name = "projects")
-public data class Project(
+data class Project(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "id")

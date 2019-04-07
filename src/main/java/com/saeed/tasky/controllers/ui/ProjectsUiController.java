@@ -45,7 +45,8 @@ public class ProjectsUiController {
 
     @PostMapping("/save")
     public String saveProject(@ModelAttribute ProjectDto form1, Model model) {
-        services.saveProject(form1);
+        if (services.saveProject(form1))
+            return "Saving Failed!";
         model.addAttribute("projects", services.getProjectAllInfo());
         return "redirect:/project/ui/all";
     }

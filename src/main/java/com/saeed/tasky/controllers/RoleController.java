@@ -20,7 +20,6 @@ public class RoleController {
     }
 
     @PostMapping(value = "/add/{name}")
-
     public HttpStatus addRole(@PathVariable("name") String name) {
         return services.addRole(name) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
     }

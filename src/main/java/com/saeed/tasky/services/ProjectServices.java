@@ -19,16 +19,14 @@ public class ProjectServices {
 
     private ProjectRepository projectRepository;
     private UserRoleProjectRepository userRoleProjectRepository;
-    private UserServices userServices;
-    private ProjectMapper mapper;
+    public UserServices userServices;
 
     @Autowired
     public ProjectServices(ProjectRepository projectRepository, UserRoleProjectRepository userRoleProjectRepository,
-                           UserServices userServices, ProjectMapper mapper) {
+                           UserServices userServices) {
         this.projectRepository = projectRepository;
         this.userRoleProjectRepository = userRoleProjectRepository;
         this.userServices = userServices;
-        this.mapper = mapper;
     }
 
     public List getAllProjects() {
@@ -43,12 +41,14 @@ public class ProjectServices {
         return projectRepository.findProjectById(id);
     }
 
-    public boolean addProject(ProjectDto projectDto) {
-        projectRepository.save(mapper.mapDtoToProject(projectDto));
-        UserRoleProject userRoleProject = new UserRoleProject(mapper.mapDtoToProject(projectDto),
-                projectDto.getUser(), projectDto.getRole());
-        userRoleProjectRepository.save(userRoleProject);
-        return true;
+    public UserRoleProject addProject(ProjectDto projectDto) {
+        Project project = projectRepository.save(ProjectMapper.INSTANCE.mapDtoToProject(projectDto));
+        UserRoleProject userRoleProject = new UserRoleProject();
+        userRoleProject.setProject(project);
+        userRoleProject.setUser(projectDto.getUser());
+        userRoleProject.setRole(projectDto.getRole());
+        UserRoleProject result = userRoleProjectRepository.save(userRoleProject);
+        return result;
     }
 
     public List getProjectMembers(long projectId) {
@@ -60,8 +60,13 @@ public class ProjectServices {
     }
 
     public boolean addMemberToProject(MembersAddedDto membersAddedDto) {
-        UserRoleProject userRoleProject = new UserRoleProject(getProjectById(membersAddedDto.getProjectId()),
-                getUser(membersAddedDto.getUserId()), getRoleById(membersAddedDto.getRoleId()));
+        UserRoleProject userRoleProject = new UserRoleProject();
+        if (membersAddedDto.getProjectId() != null)
+            userRoleProject.setProject(getProjectById(membersAddedDto.getProjectId()));
+        if (membersAddedDto.getUserId() != null)
+            userRoleProject.setUser(getUser(membersAddedDto.getUserId()));
+        userRoleProject.setRole(getRoleById(membersAddedDto.getRoleId()));
+
         userRoleProjectRepository.save(userRoleProject);
         return true;
     }
@@ -74,10 +79,21 @@ public class ProjectServices {
         return userServices.getRoleById(roleId);
     }
 
-    public void saveProject(ProjectDto form) {
+    public boolean saveProject(ProjectDto form) {
+        if (form.getProject() == null)
+            return false;
         projectRepository.save(form.getProject());
-        UserRoleProject userRoleProject = new UserRoleProject(form.getProject(),
-                getUser(form.getUser().getId()), getRoleById(form.getRole().getId()));
+
+        UserRoleProject userRoleProject = new UserRoleProject();
+        userRoleProject.setProject(ProjectMapper.INSTANCE.mapDtoToProject(form));
+        if (form.getUser() == null)
+            return false;
+        userRoleProject.setUser(getUser(form.getUser().getId()));
+        if (form.getRole() == null)
+            return false;
+        userRoleProject.setRole(getRoleById(form.getRole().getId()));
+
         userRoleProjectRepository.save(userRoleProject);
+        return true;
     }
 }

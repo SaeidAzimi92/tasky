@@ -2,7 +2,6 @@ package com.saeed.tasky.services;
 
 import com.saeed.tasky.models.Role;
 import com.saeed.tasky.models.User;
-import com.saeed.tasky.models.UserRoleProject;
 import com.saeed.tasky.models.dto.UserDto;
 import com.saeed.tasky.models.dto.mapper.UserMapper;
 import com.saeed.tasky.repositories.UserRepository;
@@ -19,20 +18,18 @@ public class UserServices {
     private UserRepository repository;
     private UserRoleProjectRepository userRoleProjectRepository;
     private RoleServices roleServices;
-    private final UserMapper userMapper;
 
     @Autowired
     public UserServices(UserRepository repository, UserRoleProjectRepository userRoleProjectRepository,
-                        RoleServices roleServices, UserMapper userMapper) {
+                        RoleServices roleServices) {
         this.repository = repository;
         this.userRoleProjectRepository = userRoleProjectRepository;
         this.roleServices = roleServices;
-        this.userMapper = userMapper;
     }
 
     public boolean addUser(UserDto userDto) {
         try {
-            repository.save(userMapper.mapDtoToUser(userDto));
+            repository.save(UserMapper.INSTANCE.mapDtoToUser(userDto));
             return true;
         } catch (IllegalArgumentException ex) {
             return false;
