@@ -10,7 +10,7 @@ data class Project(
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "id")
         var id: Long? = 0,
-        @Column(name = "name")
+        @Column(name = "projectName")
         var name: String? = null,
         @Column(name = "icon")
         var icon: String? = null,

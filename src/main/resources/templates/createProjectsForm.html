@@ -26,12 +26,12 @@
 
                     <tr th:each="projects1, itemStat : ${form1}">
                         <th> Name:</th>
-                        <td><input th:field="*{project.name}"/></td>
+                        <td><input th:field="*{projectName}"/></td>
                     </tr>
 
                     <tr th:each="projects2, itemStat : ${form1}">
                         <th> Icon:</th>
-                        <td><input th:field="*{project.icon}"/></td>
+                        <td><input th:field="*{projectIcon}"/></td>
                     </tr>
 
                     <tr th:each="projects3, itemStat : ${form1}">
@@ -43,7 +43,6 @@
                         <th> Role:</th>
                         <td><input th:field="*{role.id}"/></td>
                     </tr>
-
 
                     </tbody>
                 </table>

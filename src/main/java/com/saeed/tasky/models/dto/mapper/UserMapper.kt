@@ -6,14 +6,21 @@ import com.saeed.tasky.models.dto.UserDto
 object UserMapper {
     fun mapUserToDto(user: User): UserDto {
         val dto = UserDto()
-        dto.copy(firstName = user.firstName, lastName = user.lastName,
-                avatar = user.avatar, email = user.email, password = user.password)
+        dto.firstName = user.firstName
+        dto.lastName = user.lastName
+        dto.avatar = user.avatar
+        dto.email = user.email
+        dto.password = user.password
         return dto
     }
+
     fun mapDtoToUser(dto: UserDto): User {
         val user = User()
-        user.copy(firstName = dto.firstName, lastName = dto.lastName,
-                avatar = dto.avatar, email = dto.email, password = dto.password)
+        user.firstName = dto.firstName
+        user.lastName = dto.lastName
+        user.avatar = dto.avatar
+        user.email = dto.email
+        user.password = dto.password
         return user
     }
 }

@@ -1,7 +1,6 @@
 package com.saeed.tasky.project
 
-import com.saeed.tasky.models.Project
-import com.saeed.tasky.models.User
+import com.saeed.tasky.models.dto.ProjectRootsDto
 import com.saeed.tasky.models.dto.ProjectDto
 import com.saeed.tasky.services.ProjectServices
 import org.assertj.core.api.Assertions.assertThat
@@ -35,13 +34,32 @@ class ProjectServicesTests {
     @Test
     fun `Add project test`() {
         val dto = ProjectDto()
-        val name = "name of project3"
-        dto.name = name
-        dto.user = services.userServices.users[2] as User?
+        val name = "projectName of project4"
+        dto.projectName = name
+        dto.projectIcon = "ssd.fgg"
+        dto.user = services.getUser(17)
         dto.role = services.getRoleByName("admin")
 
         val result = services.addProject(dto)
-        assertThat(result.project!!.name).isEqualTo(name)
+        assertThat(result.projectName).isEqualTo(name)
     }
 
+// change : at first add a project @Before and save its id and then called these tests
+    @Test
+    fun `get project members by project-id`(){
+        val pId: Long = 161
+        val result = services.getProjectMembers(pId)
+        assertThat(result).isNotEmpty
+    }
+
+    @Test
+    fun `add a developer to project`(){
+        val project = services.getProjectById(161)
+        val user = services.getUser(146)
+        val role = services.getRoleById(4)
+        val dto = ProjectRootsDto(projectId = project.id,projectName = project.name,
+                userId = user.id, userName = user.firstName,roleId = role.id, roleName = role.name)
+        val result = services.addMemberToProject(dto)
+        assertThat(result).isTrue()
+    }
 }

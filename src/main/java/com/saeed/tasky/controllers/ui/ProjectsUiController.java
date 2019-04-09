@@ -1,6 +1,5 @@
 package com.saeed.tasky.controllers.ui;
 
-import com.saeed.tasky.models.Project;
 import com.saeed.tasky.models.Role;
 import com.saeed.tasky.models.User;
 import com.saeed.tasky.models.dto.ProjectDto;
@@ -33,21 +32,16 @@ public class ProjectsUiController {
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         ProjectDto projectForm = new ProjectDto();
-
         projectForm.setRole(new Role());
         projectForm.setUser(new User());
-        projectForm.setProject(new Project());
-        projectForm.setName("name");
-
+        projectForm.setProjectName("name");
         model.addAttribute("form1", projectForm);
         return "createProjectsForm";
     }
 
     @PostMapping("/save")
     public String saveProject(@ModelAttribute ProjectDto form1, Model model) {
-        if (services.saveProject(form1))
-            return "Saving Failed!";
-        model.addAttribute("projects", services.getProjectAllInfo());
+        services.addProject(form1);
         return "redirect:/project/ui/all";
     }
 }

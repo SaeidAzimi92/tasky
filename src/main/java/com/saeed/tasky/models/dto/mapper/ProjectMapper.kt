@@ -7,15 +7,14 @@ object ProjectMapper {
 
     fun mapProjectToDto(project: Project): ProjectDto {
         val dto = ProjectDto()
-        dto.name = project.name
-        dto.project = project
+        dto.projectName = project.name
         return dto
     }
 
     fun mapDtoToProject(dto: ProjectDto): Project {
         val project = Project()
-        project.name = dto.name
-        project.icon = dto.project?.icon
+        project.name = dto.projectName
+        project.icon = dto.projectIcon
         return project
     }
 }

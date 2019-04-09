@@ -28,7 +28,7 @@ class ProjectCrudRepoTest {
     @Test
     @Order(value = 2)
     fun `add a project, must be successful`() {
-        val name = "project name"
+        val name = "project projectName"
         val icon = "project icon"
 
         val entity = Project(name = name, icon = icon)
@@ -40,7 +40,7 @@ class ProjectCrudRepoTest {
     @Test
     @Order(value = 3)
     fun `add a project and find it, must be successful`() {
-        val name = "project name"
+        val name = "project projectName"
         val icon = "project icon"
 
         val entity = Project(name = name, icon = icon)
@@ -55,7 +55,7 @@ class ProjectCrudRepoTest {
     @Test
     @Order(value = 4)
     fun `add a project and find it by Id, must be successful`() {
-        val name = "project name"
+        val name = "project projectName"
         val icon = "project icon"
 
         val entity = Project(name = name, icon = icon)
@@ -68,7 +68,7 @@ class ProjectCrudRepoTest {
     @Test
     @Order
     fun `Delete item by name`() {
-        val name = "project name"
+        val name = "project projectName"
         val result = repository.removeByName(name)
         assertThat(result).isNotEmpty
 

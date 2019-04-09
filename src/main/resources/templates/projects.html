@@ -31,8 +31,8 @@
         <td colspan="2"> No Projects Available</td>
     </tr>
     <tr class="projects-item" th:each="project : ${projects}">
-        <td><span th:text="${project.getProject().name}"> Name </span></td>
-        <td><span th:text="${project.getUser().id}"> Name </span></td>
+        <td><span th:text="${project.projectName}"> Name </span></td>
+        <td><span th:text="${project.userId}"> Name </span></td>
     </tr>
     </tbody>
 </table>

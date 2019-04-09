@@ -1,17 +1,17 @@
 package com.saeed.tasky.repositories;
 
-import com.saeed.tasky.models.UserRoleProject;
+import com.saeed.tasky.models.ProjectRoots;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface UserRoleProjectRepository extends CrudRepository<UserRoleProject, Long> {
+public interface UserRoleProjectRepository extends CrudRepository<ProjectRoots, Long> {
 
-    UserRoleProject findByUserId(long userId);
+    ProjectRoots findByUserId(long userId);
 
-    List<UserRoleProject> findAllByUserId(long id);
+    List<ProjectRoots> findAllByUserId(long id);
 
-    List<UserRoleProject> findAllByProjectId(long id);
+    List<ProjectRoots> findAllByProjectId(long id);
 }
